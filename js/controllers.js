@@ -55,6 +55,15 @@ function GddBoardCtrl(twitterWatcher, $log, $location, $defer) {
 		var winners = angular.Array.orderBy(self.board.getPlayers(), self.getPlayerPoints, true);
 		if(winners.length > 0){
 			self.winner = winners[0];
+            var winner = {
+                name: self.winner.getName(),
+                image: self.winner.getImage(),
+                points: self.winner.getPoints()
+            };
+
+            var savedWinners = JSON.parse(localStorage.getItem('winners')) || [];
+            savedWinners.push(winner);
+            localStorage.setItem('winners', JSON.stringify(savedWinners));
 		}
 		if(self.queue.length > 0){
 			self.startDate = self.queue[self.queue.length - 1].time;

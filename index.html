@@ -1,0 +1,57 @@
+<!doctype html>
+<html xmlns:ng="http://angularjs.org/"
+	xmlns:gdd="http://labs.appsatori.eu/gdd2011" ng:controller="GddBoardCtrl">
+<head>
+<meta charset="utf-8">
+<title>GDD 2011 Stream Wall &amp; Game</title>
+<link rel="stylesheet" href="css/app.css" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+<script src="lib/dateutils.js" type="text/javascript"></script>
+</head>
+<body>
+
+
+	<div class="container">
+		<h1>Posts for "{{watcher.getQuery()}}"</h1>
+		<div class="row">
+		
+      			
+			<div class="span9" id="monitor">
+<!-- 			<h2>Send coordinates (e.g. <strong id="coor">#ab</strong>) to <strong>@gddwall</strong> and wait</h2> -->
+			
+			  <img id="korunka" src="./img/gdd_korunka.png" />
+				<div id="canvasDiv"><canvas id="board" height="{{canvasHeight}}" width="{{canvasWidth}}"></canvas></div>
+				
+				<div id="playersList" class="span1">
+				<div ng:repeat="player in board.getPlayers().$orderBy(getPlayerPoints, true).$limitTo(7).$filter(itExists)">
+				  <em>{{getShortPlayerName(player)}} ({{player.getPoints()}})</em><br />
+				  <img src="{{player.getImage()}}" width="{{boardCanvas.getIcon() + 5}}" height="{{boardCanvas.getIcon() + 5}}"/>
+				</div>
+			</div>
+			<h3>Send coordinates (e.g. <strong>#ab</strong>) to <strong>@gddwall</strong> and wait a few seconds</h3>
+			</div>
+			
+			<div class="span6" id="mobile">
+			  
+			  <div id="screen">
+				<div ng:repeat="tweet in wallTweets.$limitTo(wallTweetsMaxCount).reverse()" ng:class="tweetClasses(tweet)">
+				<img src="{{tweet.profile_image_url}}" width="{{boardCanvas.getIcon()}}" height="{{boardCanvas.getIcon()}}"/>
+				<p><strong>{{tweet.from_user}}</strong>&nbsp;{{tweet.text | html}}</p>
+				</div>
+				
+			
+				
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="lib/cake.js" ng:autobind></script>
+	<script src="js/gdd2011.js" ng:autobind></script>
+	<script src="lib/angular/angular.js" ng:autobind></script>
+	<script src="js/services.js"></script>
+	<script src="js/controllers.js"></script>
+	<script src="js/filters.js"></script>
+	<script src="js/widgets.js"></script>
+</body>
+</html>
